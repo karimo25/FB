@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع تسجيل غيبات الأمانة</title>
+    <link rel="icon" href="downloadfb.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="tkwin.png"  class="logo">
+            <div class="header-text">
+                <h1>مرحبا بكم في موقع كريم باتنة الأمانة</h1>
+                <p>نظام إلكتروني متكامل لتسجيل الغيابات</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="input-group">
+            <div class="form-control">
+                <label for="studentName">الاسم واللقب المتربص(ة)</label>
+                <input type="text" id="studentName" required placeholder="أدخل الاسم الكامل">
+            </div>
+            <div class="form-control">
+                <label for="specialty">الاختصاص</label>
+                <select id="specialty">
+                    <option value="الأمانة">الأمانة</option>
+                    <option value="كهرباء السيارة"  >كهرباء السيارة </option>
+                    <option value="الخياطة">الخياطة</option>
+                    <option value="العنايا بالحدائق">العنايا بالحدائق</option>
+                    <option value="التأمينات">التأمينات</option>
+                    <option value="النجارة">النجارة</option>
+                    <option value="الحدادة">الحدادة</option>
+                    <option value="نجارة الالمنيوم">نجارة الالمنيوم</option>
+                    <option value="الحلاقة">الحلاقة</option>
+                    <option value="الطبخ الجماعي">الطبخ الجماعي</option>
+                    <option value="مكانيسيا">مكانيسا</option>
+                    <option value=" الترصيص الصحي">الترصيص الصحي</option>
+                </select>
+            </div>
+            <div class="form-control">
+                <label for="group">الفوج</label>
+                <select id="group">
+                    <option value="A">الفوج A</option>
+                    <option value="B">الفوج B</option>
+                    <option value="C">الفوج C</option>
+                    <option value="D">الفوج D</option>
+                    <option value="E">الفوج E</option>
+                    <option value="F">الفوج F</option>
+                    <option value="G">الفوج G</option>
+                    <option value="H">الفوج H</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <div class="form-control">
+                <label for="absenceCount">عدد الغيابات</label>
+                <input type="number" id="absenceCount" min="0" value="0">
+            </div>
+            <div class="form-control">
+                <label for="status">الحالة</label>
+                <select id="status">
+                    <option value="حاضر">حاضر</option>
+                    <option value="غائب">غائب</option>
+                </select>
+            </div>
+            <div class="form-control">
+                <label for="notes">ملاحظات</label>
+                <input type="text" id="notes" placeholder="أدخل ملاحظات إن وجدت">
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn-primary" onclick="addStudent()">إضافة / تحديث</button>
+            <button class="btn-success" onclick="markPresent()">تسجيل حضور</button>
+            <button class="btn-danger" onclick="markAbsent()">تسجيل غياب</button>
+        </div>
+
+        <table id="attendanceTable">
+            <thead>
+                <tr>
+                    <th>الاسم</th>
+                    <th>الاختصاص</th>
+                    <th>الفوج</th>
+                    <th>الحالة</th>
+                    <th>عدد الغيابات</th>
+                    <th>تاريخ التسجيل</th>
+                    <th>ملاحظات</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- سيتم ملؤها بواسطة JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        من إعداد عبد الكريم عنتر لزهر © 2025
+    </footer>
+    <script src="Node.js"></script>
+</body>
+</html>

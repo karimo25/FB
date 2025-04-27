@@ -15,9 +15,17 @@ function addStudent() {
         alert('الرجاء إدخال اسم الطالب كاملاً');
         return;
     }
-
     const now = new Date();
-    const dateTime = now.toLocaleString('ar-EG');
+    const daysOfWeek = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+    const dayName = daysOfWeek[now.getDay()];
+    const dateTime = `${dayName} ${now.toLocaleString('fr-FR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    })}`;
 
     // التحقق مما إذا كان الطالب موجوداً بالفعل
     const existingIndex = students.findIndex(s => s.name === name && s.specialty === specialty && s.group === group);
@@ -126,3 +134,61 @@ function clearForm() {
 
 // تحميل البيانات عند بدء التشغيل
 document.addEventListener('DOMContentLoaded', renderTable);
+// دالة لتصفية الطلاب حسب الاختصاص
+function filterBySpecialty(specialty) {
+    const filteredStudents = students.filter(student => student.specialty === specialty);
+    renderFilteredTable(filteredStudents);
+}
+
+// دالة لعرض البيانات المصفاة في الجدول
+function renderFilteredTable(filteredStudents) {
+    const tableBody = document.getElementById('tableBody');
+    tableBody.innerHTML = '';
+
+    filteredStudents.forEach((student, index) => {
+        const row = document.createElement('tr');
+        
+        // إضافة خلايا الصف
+        row.innerHTML = `
+            <td>${student.name}</td>
+            <td>${student.specialty}</td>
+            <td>${student.group}</td>
+            <td class="status-${student.status === 'حاضر' ? 'present' : 'absent'}">${student.status}</td>
+            <td>${student.absences}</td>
+            <td>${student.dateTime}</td>
+            <td>${student.notes || '-'}</td>
+            <td>
+                <button class="btn-warning" onclick="decreaseAbsence(${index})">خفض غياب</button>
+                <button class="btn-danger" onclick="deleteStudent(${index})">حذف</button>
+            </td>
+        `;
+        
+        tableBody.appendChild(row);
+    });
+}
+
+// دالة لإنشاء قائمة الروابط لكل اختصاص
+function createSpecialtyLinks() {
+    const specialties = [...new Set(students.map(student => student.specialty))];
+    const linksContainer = document.getElementById('specialtyLinks');
+    linksContainer.innerHTML = '';
+
+    specialties.forEach(specialty => {
+        const link = document.createElement('button');
+        link.textContent = specialty;
+        link.className = 'btn-specialty';
+        link.onclick = () => filterBySpecialty(specialty);
+        linksContainer.appendChild(link);
+    });
+}
+
+// تحديث الروابط عند إضافة أو تعديل الطلاب
+document.addEventListener('DOMContentLoaded', createSpecialtyLinks);
+document.addEventListener('studentsUpdated', createSpecialtyLinks);
+
+// تعديل دالة الحفظ لتحديث الروابط
+function saveData() {
+    localStorage.setItem('students', JSON.stringify(students));
+    const event = new Event('studentsUpdated');
+    document.dispatchEvent(event);
+}
